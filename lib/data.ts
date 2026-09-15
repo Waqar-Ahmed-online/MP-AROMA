@@ -5,7 +5,7 @@ import { scentCategories as mockScentCategories } from "@/data/scentCategories";
 import { reviews as mockReviews } from "@/data/reviews";
 import { DiscoverySetContent } from "@/types/discoverySet";
 import { HeroSlide } from "@/types/hero";
-
+import { AboutSection } from "@/types/about";
 
 // Mongo documents have `_id`, our types use `id` (string) — this
 // converts one Mongo doc into our app-facing shape.
@@ -137,3 +137,31 @@ export async function getProductBySlug(slug: string): Promise<Product | null> {
   return all.find((p) => p.slug === slug) || null;
 }
 
+const fallbackAboutSections: AboutSection[] = [
+  {
+    id: "1",
+    eyebrow: "THE HEART BEHIND THE SCENT",
+    title: "Our Story",
+    description:
+      "Inspired by the art of perfumery and the beauty of emotion, MPAROMA was born in Paris. Each fragrance is a reflection of personality.",
+    image: "",
+    imagePosition: "right",
+    order: 1,
+  },
+];
+
+export async function getAboutSections(): Promise<AboutSection[]> {
+  try {
+    const db = await getDb();
+    const docs = await db.collection("aboutSections").find({}).sort({ order: 1 }).toArray();
+    if (docs.length > 0) return docs.map(withStringId) as unknown as AboutSection[];
+    return fallbackAboutSections;
+  } catch {
+    return fallbackAboutSections;
+  }
+}
+
+export async function getAboutSectionById(id: string): Promise<AboutSection | null> {
+  const all = await getAboutSections();
+  return all.find((s) => s.id === id) || null;
+}
