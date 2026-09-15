@@ -137,18 +137,7 @@ export async function getProductBySlug(slug: string): Promise<Product | null> {
   return all.find((p) => p.slug === slug) || null;
 }
 
-const fallbackAboutSections: AboutSection[] = [
-  {
-    id: "1",
-    eyebrow: "THE HEART BEHIND THE SCENT",
-    title: "Our Story",
-    description:
-      "Inspired by the art of perfumery and the beauty of emotion, MPAROMA was born in Paris. Each fragrance is a reflection of personality.",
-    image: "",
-    imagePosition: "right",
-    order: 1,
-  },
-];
+const fallbackAboutSections: AboutSection[] = [];
 
 export async function getAboutSections(): Promise<AboutSection[]> {
   try {
