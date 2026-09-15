@@ -41,6 +41,3 @@ export default async function AboutPage() {
     </div>
   );
 }
-// THE HEART BEHIND THE SCENT
-
-// Inspired by the art of perfumery and the beauty of emotion, MPAROMA was born in Paris. Each fragrance is a reflection of personality.
