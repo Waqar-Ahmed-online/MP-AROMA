@@ -215,3 +215,26 @@ export async function sendNewsletterAdminEmail(subscriberEmail: string) {
     html: `<p>New email subscribed to the newsletter: <strong>${subscriberEmail}</strong></p>`,
   });
 }
+export async function sendContactAdminEmail(data: { name: string; email: string; message: string }) {
+  const adminEmail = process.env.ADMIN_EMAIL;
+  if (!adminEmail) return;
+
+  const from = process.env.MAIL_FROM || process.env.SMTP_USER;
+  const t = getTransporter();
+
+  await t.sendMail({
+    from,
+    to: adminEmail,
+    replyTo: data.email,
+    subject: `New Contact Form Message — MPAROMA`,
+    html: `
+      <div style="font-family:Arial,sans-serif;max-width:600px;">
+        <h2>New message from Contact Us page</h2>
+        <p><strong>Name:</strong> ${data.name}</p>
+        <p><strong>Email:</strong> ${data.email}</p>
+        <p><strong>Message:</strong></p>
+        <p>${data.message}</p>
+      </div>
+    `,
+  });
+}
