@@ -22,6 +22,20 @@ export const metadata: Metadata = {
   title: "MPAROMA | Maison De Parfum",
   description:
     "A signature written in scent — discover MPAROMA's luxury fragrance collection, crafted for every moment.",
+  metadataBase: new URL("https://mp-aroma.vercel.app"),
+  openGraph: {
+    title: "MPAROMA | Maison De Parfum",
+    description:
+      "A signature written in scent — discover MPAROMA's luxury fragrance collection, crafted for every moment.",
+    images: [
+      {
+        url: "/images/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "MPAROMA",
+      },
+    ],
+  },
 };
 
 export default function RootLayout({

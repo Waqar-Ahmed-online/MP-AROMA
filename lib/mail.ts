@@ -201,3 +201,17 @@ export async function sendCustomerOrderEmail(order: OrderEmailDetails) {
     html: buildCustomerHtml(order),
   });
 }
+export async function sendNewsletterAdminEmail(subscriberEmail: string) {
+  const adminEmail = process.env.ADMIN_EMAIL;
+  if (!adminEmail) return; // silently skip agar set nahi hai
+
+  const from = process.env.MAIL_FROM || process.env.SMTP_USER;
+  const t = getTransporter();
+
+  await t.sendMail({
+    from,
+    to: adminEmail,
+    subject: "New Newsletter Subscriber — MPAROMA",
+    html: `<p>New email subscribed to the newsletter: <strong>${subscriberEmail}</strong></p>`,
+  });
+}
