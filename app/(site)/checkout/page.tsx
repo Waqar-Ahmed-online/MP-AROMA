@@ -15,8 +15,10 @@ export default function CheckoutPage() {
   const [shippingMethod, setShippingMethod] = useState<ShippingMethod>(
     shippingOptions[0].id
   );
-  const [discountCode, setDiscountCode] = useState("");
-  const [discountMsg, setDiscountMsg] = useState<string | null>(null);
+const [discountCode, setDiscountCode] = useState("");
+const [discountMsg, setDiscountMsg] = useState<string | null>(null);
+const [discountPercent, setDiscountPercent] = useState<number | null>(null);
+const [applyingDiscount, setApplyingDiscount] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [orderError, setOrderError] = useState<string | null>(null);
   const [orderNote, setOrderNote] = useState("");
@@ -44,22 +46,43 @@ export default function CheckoutPage() {
     phone: "",
   });
 
-  const shippingCost =
-    shippingOptions.find((s) => s.id === shippingMethod)?.cost ?? 0;
-  const total = subtotal + shippingCost;
-
+const shippingCost =
+  shippingOptions.find((s) => s.id === shippingMethod)?.cost ?? 0;
+const discountAmount = discountPercent
+  ? Math.round((subtotal * discountPercent) / 100)
+  : 0;
+const total = subtotal - discountAmount + shippingCost;
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   }
 
-  function handleApplyDiscount() {
-    setDiscountMsg(
-      discountCode.trim()
-        ? "Discount codes are currently unavailable."
-        : "Please enter a code."
-    );
-    setTimeout(() => setDiscountMsg(null), 2500);
+async function handleApplyDiscount() {
+  if (!discountCode.trim()) {
+    setDiscountMsg("Please enter a code.");
+    return;
   }
+  setApplyingDiscount(true);
+  setDiscountMsg(null);
+  try {
+    const res = await fetch("/api/vouchers/validate", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ code: discountCode }),
+    });
+    const data = await res.json();
+    if (!res.ok) {
+      setDiscountPercent(null);
+      setDiscountMsg(data.error || "Invalid code.");
+    } else {
+      setDiscountPercent(data.percent);
+      setDiscountMsg(`🎉 ${data.percent}% off applied!`);
+    }
+  } catch {
+    setDiscountMsg("Something went wrong, try again.");
+  } finally {
+    setApplyingDiscount(false);
+  }
+}
 
   async function handlePlaceOrder(e: React.FormEvent) {
     e.preventDefault();
@@ -78,6 +101,9 @@ export default function CheckoutPage() {
         selectedTesters: i.selectedTesters || [],
       })),
       subtotal,
+       discountCode: discountPercent ? discountCode.toUpperCase() : null, 
+  discountPercent: discountPercent || 0,                            
+  discountAmount,  
       shippingMethod,
       shippingLabel,
       shippingCost,
@@ -408,32 +434,39 @@ export default function CheckoutPage() {
               placeholder="Discount code"
               className="flex-1 border border-gold/20 bg-ink px-3 py-2 text-sm text-parchment placeholder-smoke focus:border-gold focus:outline-none"
             />
-            <button
-              type="button"
-              onClick={handleApplyDiscount}
-              className="border border-gold/40 px-4 text-xs tracking-[0.1em] text-parchment hover:bg-gold hover:text-ink"
-            >
-              Apply
-            </button>
+          <button
+  type="button"
+  onClick={handleApplyDiscount}
+  disabled={applyingDiscount}
+  className="border border-gold/40 px-4 text-xs tracking-[0.1em] text-parchment hover:bg-gold hover:text-ink disabled:opacity-50"
+>
+  {applyingDiscount ? "..." : "Apply"}
+</button>
           </div>
           {discountMsg && (
             <p className="mt-1 text-xs text-smoke">{discountMsg}</p>
           )}
 
           <div className="mt-6 flex flex-col gap-2 border-t border-gold/10 pt-4 text-sm">
-            <div className="flex justify-between text-parchment/85">
-              <span>Subtotal</span>
-              <span>Rs. {subtotal.toLocaleString()}.00</span>
-            </div>
-            <div className="flex justify-between text-parchment/85">
-              <span>Shipping</span>
-              <span>{shippingCost === 0 ? "FREE" : `Rs. ${shippingCost}.00`}</span>
-            </div>
-            <div className="flex justify-between border-t border-gold/10 pt-2 text-base font-semibold text-parchment">
-              <span>Total</span>
-              <span className="text-gold">Rs. {total.toLocaleString()}.00</span>
-            </div>
-          </div>
+  <div className="flex justify-between text-parchment/85">
+    <span>Subtotal</span>
+    <span>Rs. {subtotal.toLocaleString()}.00</span>
+  </div>
+  {discountPercent && (
+    <div className="flex justify-between text-gold">
+      <span>Discount ({discountPercent}%)</span>
+      <span>-Rs. {discountAmount.toLocaleString()}.00</span>
+    </div>
+  )}
+  <div className="flex justify-between text-parchment/85">
+    <span>Shipping</span>
+    <span>{shippingCost === 0 ? "FREE" : `Rs. ${shippingCost}.00`}</span>
+  </div>
+  <div className="flex justify-between border-t border-gold/10 pt-2 text-base font-semibold text-parchment">
+    <span>Total</span>
+    <span className="text-gold">Rs. {total.toLocaleString()}.00</span>
+  </div>
+</div>
         </div>
       </div>
     </section>

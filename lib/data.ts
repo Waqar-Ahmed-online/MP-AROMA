@@ -154,3 +154,26 @@ export async function getAboutSectionById(id: string): Promise<AboutSection | nu
   const all = await getAboutSections();
   return all.find((s) => s.id === id) || null;
 }
+import { Voucher } from "@/types/voucher";
+
+export async function getVouchers(): Promise<Voucher[]> {
+  try {
+    const db = await getDb();
+    const docs = await db.collection("vouchers").find({}).toArray();
+    return docs.map(withStringId) as unknown as Voucher[];
+  } catch {
+    return [];
+  }
+}
+
+export async function getVoucherByCode(code: string): Promise<Voucher | null> {
+  try {
+    const db = await getDb();
+    const doc = await db
+      .collection("vouchers")
+      .findOne({ code: code.trim().toUpperCase() });
+    return doc ? (withStringId(doc) as unknown as Voucher) : null;
+  } catch {
+    return null;
+  }
+}

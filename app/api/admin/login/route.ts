@@ -4,14 +4,14 @@ import { getDb } from "@/lib/mongodb";
 import { createSessionToken, ADMIN_COOKIE_NAME } from "@/lib/auth";
 
 export async function POST(req: NextRequest) {
-  const { email, password } = await req.json();
+  const { username, password } = await req.json();
 
-  if (!email || !password) {
-    return NextResponse.json({ error: "Email and password required" }, { status: 400 });
+  if (!username || !password) {
+    return NextResponse.json({ error: "Username and password required" }, { status: 400 });
   }
 
   const db = await getDb();
-  const admin = await db.collection("admins").findOne({ email });
+  const admin = await db.collection("admins").findOne({ username });
 
   if (!admin) {
     return NextResponse.json({ error: "Invalid credentials" }, { status: 401 });
@@ -22,7 +22,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Invalid credentials" }, { status: 401 });
   }
 
-  const token = await createSessionToken(admin.email);
+  const token = await createSessionToken(admin.username);
 
   const res = NextResponse.json({ success: true });
   res.cookies.set(ADMIN_COOKIE_NAME, token, {

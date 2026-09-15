@@ -9,7 +9,7 @@ interface BracketButtonProps {
 }
 
 const base =
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap border px-6 py-3 font-body text-[0.72rem] tracking-[0.22em] uppercase transition-colors duration-200";
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap border px-4 py-2.5 font-body text-[0.62rem] tracking-[0.14em] uppercase transition-colors duration-200 sm:px-6 sm:py-3 sm:text-[0.72rem] sm:tracking-[0.22em]";
 
 const variants = {
   outline:

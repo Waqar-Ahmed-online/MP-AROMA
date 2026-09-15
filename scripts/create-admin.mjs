@@ -11,7 +11,7 @@ const dbName = process.env.MONGODB_DB || "mparoma";
 const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
 
 async function main() {
-  const email = await rl.question("Admin email: ");
+  const username = await rl.question("Admin username: ");
   const password = await rl.question("Admin password: ");
   rl.close();
 
@@ -22,12 +22,12 @@ async function main() {
   const db = client.db(dbName);
 
   await db.collection("admins").updateOne(
-    { email },
-    { $set: { email, passwordHash, createdAt: new Date() } },
+    { username },
+    { $set: { username, passwordHash, createdAt: new Date() } },
     { upsert: true }
   );
 
-  console.log(`Admin "${email}" ready.`);
+  console.log(`Admin "${username}" ready.`);
   await client.close();
 }
 

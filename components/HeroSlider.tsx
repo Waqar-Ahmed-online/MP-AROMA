@@ -22,7 +22,7 @@ export default function HeroSlider({ slides }: { slides: HeroSlide[] }) {
   const slide = slides[index];
 
   return (
-    <section className="relative overflow-hidden border-b border-gold/10 bg-ink">
+    <section className="relative w-full overflow-hidden border-b border-gold/10 bg-ink">
       <div className="relative min-h-[600px] sm:min-h-[680px] md:min-h-[760px]">
         {slides.map((s, i) => (
           <img
@@ -36,13 +36,15 @@ export default function HeroSlider({ slides }: { slides: HeroSlide[] }) {
         ))}
         <div className="absolute inset-0 bg-ink/50" />
 
-        <div className="relative z-10 flex h-full min-h-[600px] flex-col items-center justify-center px-6 text-center sm:min-h-[680px] md:min-h-[760px]">
-          <div key={slide.id} className="animate-hero-text flex flex-col items-center">
-            <p className="text-[0.7rem] tracking-[0.3em] text-gold">{slide.tagline}</p>
-            <h1 className="mt-3 max-w-3xl font-display text-4xl leading-tight text-parchment sm:text-5xl md:text-6xl">
+        <div className="relative z-10 flex h-full min-h-[600px] flex-col items-center justify-center px-4 text-center sm:min-h-[680px] sm:px-6 md:min-h-[760px]">
+          <div key={slide.id} className="animate-hero-text flex w-full max-w-3xl flex-col items-center">
+            <p className="text-[0.65rem] tracking-[0.25em] text-gold sm:text-[0.7rem] sm:tracking-[0.3em]">
+              {slide.tagline}
+            </p>
+            <h1 className="mt-3 max-w-full break-words font-display text-3xl leading-tight text-parchment sm:text-5xl md:text-6xl">
               {slide.heading}
             </h1>
-            <div className="mt-7 flex gap-3">
+            <div className="mt-7 flex flex-wrap items-center justify-center gap-3">
               <BracketButton href={slide.primaryCtaHref} variant="solid">
                 {slide.primaryCtaLabel}
               </BracketButton>

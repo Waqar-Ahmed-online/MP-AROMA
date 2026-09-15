@@ -12,6 +12,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   <Link href="/admin/scent-categories">SCENT CATEGORIES</Link>
   <Link href="/admin/discovery-set">DISCOVERY SET</Link>
   <Link href="/admin/about">ABOUT PAGE</Link>
+  <Link href="/admin/vouchers">VOUCHERS</Link>
   <Link href="/admin/reviews">REVIEWS</Link>
   <Link href="/admin/orders">ORDERS</Link>  
 </nav>
