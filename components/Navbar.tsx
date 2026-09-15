@@ -9,7 +9,6 @@ const navLinks = [
    { label: "HOME", href: "/" },
   { label: "COLLECTION", href: "/collection" },
   { label: "BEST SELLERS", href: "/best-sellers" },
-  { label: "THE SCENT FINDER", href: "/scent-finder" },
   { label: "PERFUME TESTERS", href: "/perfume-testers" },
   { label: "REVIEWS", href: "/reviews" },
    { label: "TRACK ORDER", href: "/track-order" },

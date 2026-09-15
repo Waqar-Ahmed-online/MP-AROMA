@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { getProducts, getBestSellers, getScentCategories } from "@/lib/data";
+import { getProducts,  getScentCategories } from "@/lib/data";
 import ImgWithFallback from "@/components/ui/ImgWithFallback";
 import { categoryMatchesSlug } from "@/lib/category";
 export const metadata = {
@@ -7,9 +7,8 @@ export const metadata = {
 };
 
 export default async function CollectionsPage() {
-  const [products, bestSellers, scentCategories] = await Promise.all([
+  const [products,  scentCategories] = await Promise.all([
     getProducts(),
-    getBestSellers(),
     getScentCategories(),
   ]);
 
@@ -20,12 +19,7 @@ export default async function CollectionsPage() {
       image: products[0]?.image ?? "",
       count: products.length,
     },
-    {
-      label: "Best Sellers",
-      href: "/best-sellers",
-      image: bestSellers[0]?.image ?? products[0]?.image ?? "",
-      count: bestSellers.length,
-    },
+ 
     ...scentCategories.map((cat) => ({
       label: cat.label,
       href: `/collection/${cat.slug}`,
