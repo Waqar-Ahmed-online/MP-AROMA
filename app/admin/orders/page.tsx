@@ -1,6 +1,7 @@
 import { getDb } from "@/lib/mongodb";
 import OrderStatusControl from "@/components/admin/OrderStatusControl";
-
+export const dynamic = "force-dynamic";   // 👈 yeh line add karo
+export const revalidate = 0;  
 interface OrderItem {
   id: string;
   name: string;

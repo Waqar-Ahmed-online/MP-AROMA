@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { getHeroSlides } from "@/lib/data";
 import DeleteHeroSlideButton from "@/components/admin/DeleteHeroSlideButton";
-
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 export default async function AdminHeroPage() {
   const slides = await getHeroSlides();
 

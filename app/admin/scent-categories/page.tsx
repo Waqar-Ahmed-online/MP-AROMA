@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { getScentCategories } from "@/lib/data";
-
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 export default async function AdminScentCategoriesPage() {
   const categories = await getScentCategories();
   return (

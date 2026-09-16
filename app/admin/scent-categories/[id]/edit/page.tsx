@@ -1,7 +1,8 @@
 import { notFound } from "next/navigation";
 import { getScentCategoryById } from "@/lib/data";
 import ScentCategoryForm from "@/components/admin/ScentCategoryForm";
-
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 export default async function EditScentCategoryPage({ params }: { params: { id: string } }) {
   const category = await getScentCategoryById(params.id);
   if (!category) notFound();

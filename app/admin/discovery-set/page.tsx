@@ -1,6 +1,7 @@
 import { getDiscoverySetContent } from "@/lib/data";
 import DiscoverySetForm from "@/components/admin/DiscoverySetForm";
-
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 export default async function AdminDiscoverySetPage() {
   const content = await getDiscoverySetContent();
   return (

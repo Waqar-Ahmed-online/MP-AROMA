@@ -1,7 +1,8 @@
 import { notFound } from "next/navigation";
 import { getHeroSlideById } from "@/lib/data";
 import HeroSlideForm from "@/components/admin/HeroSlideForm";
-
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 export default async function EditHeroSlidePage({ params }: { params: { id: string } }) {
   const slide = await getHeroSlideById(params.id);
   if (!slide) notFound();

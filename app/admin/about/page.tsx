@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { getAboutSections } from "@/lib/data";
 import DeleteAboutSectionButton from "@/components/admin/DeleteAboutSectionButton";
-
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 export default async function AdminAboutPage() {
   const sections = await getAboutSections();
 

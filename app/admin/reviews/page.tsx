@@ -1,7 +1,8 @@
 import { getDb } from "@/lib/mongodb";
 import ReviewApprovalList from "@/components/admin/ReviewApprovalList";
 import { Review } from "@/types/product";
-
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 export default async function AdminReviewsPage() {
   let reviews: Review[] = [];
 
