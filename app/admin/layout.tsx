@@ -16,6 +16,7 @@ const navLinks = [
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-screen bg-ink text-parchment">
+          <main className="px-4 py-8 sm:px-6">{children}</main>
       <header className="flex flex-col gap-6 border-b border-gold/10 px-4 py-6 sm:px-6">
         <div className="flex items-center justify-between">
           <p className="font-display text-sm tracking-[0.2em] text-gold">MPAROMA ADMIN</p>
@@ -35,7 +36,6 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         </nav>
       </header>
 
-      <main className="px-4 py-8 sm:px-6">{children}</main>
     </div>
   );
 }
