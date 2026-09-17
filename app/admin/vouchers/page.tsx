@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { getVouchers } from "@/lib/data";
 import DeleteVoucherButton from "@/components/admin/DeleteVoucherButton";
-
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 export default async function AdminVouchersPage() {
   const vouchers = await getVouchers();
 
