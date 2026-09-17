@@ -42,12 +42,44 @@ export async function PATCH(
   }
 
   const db = await getDb();
-  const result = await db
+
+  // Order ka MAUJOODA status nikal lo — sirf tabhi stock minus karni hai
+  // jab status pehli dafa "delivered" mein ja raha ho (dobara delivered
+  // pe click karne se dobara stock minus na ho).
+  const existingOrder = await db.collection("orders").findOne({ _id: objectId });
+  if (!existingOrder) {
+    return NextResponse.json({ error: "Order not found." }, { status: 404 });
+  }
+
+  await db
     .collection("orders")
     .updateOne({ _id: objectId }, { $set: { status: body.status } });
 
-  if (result.matchedCount === 0) {
-    return NextResponse.json({ error: "Order not found." }, { status: 404 });
+  if (body.status === "delivered" && existingOrder.status !== "delivered") {
+    const items: { id: string; quantity: number }[] = existingOrder.items || [];
+
+    await Promise.all(
+      items.map((item) => {
+        let productObjectId: ObjectId;
+        try {
+          productObjectId = new ObjectId(item.id);
+        } catch {
+          return Promise.resolve(); // invalid/mock id ho to skip kar do
+        }
+        return db.collection("products").updateOne(
+          { _id: productObjectId },
+          [
+            {
+              $set: {
+                stock: {
+                  $max: [0, { $subtract: [{ $ifNull: ["$stock", 0] }, item.quantity] }],
+                },
+              },
+            },
+          ]
+        );
+      })
+    );
   }
 
   return NextResponse.json({ success: true, status: body.status });
