@@ -123,14 +123,28 @@ export default function ProductDetailClient({ product }: { product: Product }) {
           </div>
 
           {/* Stock urgency bar */}
-          <div className="flex flex-col gap-2">
-            <p className="flex items-center gap-2 text-xs font-semibold tracking-[0.1em] text-gold">
-              <FlameIcon /> HURRY UP! ONLY 50 LEFT IN STOCK
-            </p>
-            <div className="h-1.5 w-full overflow-hidden rounded-full bg-ink-soft">
-              <div className="h-full w-[70%] rounded-full bg-gold" />
-            </div>
-          </div>
+        {typeof product.stock === "number" && (
+  <div className="flex flex-col gap-2">
+    <p className="flex items-center gap-2 text-xs font-semibold tracking-[0.1em] text-gold">
+      <FlameIcon />
+      {product.stock > 0
+        ? `HURRY UP! ONLY ${product.stock} LEFT IN STOCK`
+        : "OUT OF STOCK"}
+    </p>
+    <div className="h-1.5 w-full overflow-hidden rounded-full bg-ink-soft">
+      <div
+        className="h-full rounded-full bg-gold transition-all"
+        style={{
+          width: `${
+            product.stock <= 0
+              ? 0
+              : Math.min(100, Math.max(8, (product.stock / 50) * 100))
+          }%`,
+        }}
+      />
+    </div>
+  </div>
+)}
 
           {/* Ask a Question / Share */}
           <div className="flex items-center gap-6 border-y border-gold/10 py-3 text-xs tracking-[0.08em] text-parchment/85">
