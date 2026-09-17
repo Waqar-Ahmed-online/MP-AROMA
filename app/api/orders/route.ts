@@ -21,6 +21,9 @@ interface OrderRequestBody {
   shippingLabel: string;
   shippingCost: number;
   total: number;
+  discountCode?: string | null;      
+  discountPercent?: number;         
+  discountAmount?: number;  
   customer: {
     firstName: string;
     lastName: string;
@@ -63,6 +66,9 @@ export async function POST(req: Request) {
       shippingLabel: body.shippingLabel,
       shippingCost: body.shippingCost,
       total: body.total,
+        discountCode: body.discountCode || null,        // 👈 add karo
+  discountPercent: body.discountPercent || 0,      // 👈 add karo
+  discountAmount: body.discountAmount || 0, 
       customer: body.customer,
       note: body.note || "",
       status: "pending",

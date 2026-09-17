@@ -16,6 +16,9 @@ interface Order {
   shippingLabel: string;
   shippingCost: number;
   total: number;
+  discountCode?: string | null;    
+  discountPercent?: number;        
+  discountAmount?: number; 
   customer: {
     firstName: string;
     lastName: string;
@@ -94,6 +97,14 @@ export default async function AdminOrdersPage() {
                   (Shipping: {order.shippingLabel} — Rs. {order.shippingCost})
                 </span>
               </p>
+              {order.discountCode ? (
+  <p className="mt-1 text-xs text-green-300">
+    Voucher used: <span className="font-semibold">{order.discountCode}</span>{" "}
+    ({order.discountPercent}% off — Rs. {order.discountAmount?.toLocaleString()} discount)
+  </p>
+) : (
+  <p className="mt-1 text-xs text-smoke">No voucher used</p>
+)}
 
               <div className="mt-3 border-t border-gold/10 pt-3 text-sm text-parchment/85">
                 <p>
