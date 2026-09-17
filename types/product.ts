@@ -11,6 +11,7 @@ export interface Product {
   isTester?: boolean;
   maxTesters?: number;
   description?: string;
+   stock?: number; 
 }
 
 export interface ScentCategory {
