@@ -114,10 +114,10 @@ export default function ProductDetailClient({ product }: { product: Product }) {
                 <ArrowIcon /> In Stock
               </li>
               <li className="flex items-center gap-2">
-                <ArrowIcon /> Free Delivery Available*
+                <ArrowIcon /> Free Shipping on Orders Above Rs.2000
               </li>
               <li className="flex items-center gap-2">
-                <ArrowIcon /> Tester Pack In Just Rs.1000*
+                <ArrowIcon /> Three Tester Pack In Just Rs.1000*
               </li>
             </ul>
           </div>
