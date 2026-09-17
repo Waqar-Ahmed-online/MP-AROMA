@@ -29,7 +29,8 @@ export default function ProductDetailClient({ product }: { product: Product }) {
   function decreaseQty() {
     setQty((q) => Math.max(1, q - 1));
   }
-
+const maxQty = typeof product.stock === "number" ? Math.max(0, product.stock) : 10;
+const outOfStock = maxQty === 0;
   function increaseQty() {
     setQty((q) => Math.min(10, q + 1));
   }
@@ -167,26 +168,28 @@ export default function ProductDetailClient({ product }: { product: Product }) {
           {/* Quantity selector */}
           <div className="flex items-center gap-4">
             <div className="flex items-center border border-gold/30">
-              <button
-                type="button"
-                onClick={decreaseQty}
-                className="px-4 py-2 text-parchment transition-colors hover:bg-gold hover:text-ink"
-                aria-label="Decrease quantity"
-              >
-                −
-              </button>
-              <span className="w-10 text-center font-body text-sm text-parchment">
-                {qty}
-              </span>
-              <button
-                type="button"
-                onClick={increaseQty}
-                className="px-4 py-2 text-parchment transition-colors hover:bg-gold hover:text-ink"
-                aria-label="Increase quantity"
-              >
-                +
-              </button>
-            </div>
+  <button
+    type="button"
+    onClick={decreaseQty}
+    disabled={outOfStock}
+    className="px-4 py-2 text-parchment transition-colors hover:bg-gold hover:text-ink disabled:cursor-not-allowed disabled:opacity-40"
+    aria-label="Decrease quantity"
+  >
+    -
+  </button>
+  <span className="w-10 text-center font-body text-sm text-parchment">
+    {outOfStock ? 0 : qty}
+  </span>
+  <button
+    type="button"
+    onClick={increaseQty}
+    disabled={outOfStock || qty >= maxQty}
+    className="px-4 py-2 text-parchment transition-colors hover:bg-gold hover:text-ink disabled:cursor-not-allowed disabled:opacity-40"
+    aria-label="Increase quantity"
+  >
+    +
+  </button>
+</div>
           </div>
 
           {/* Action buttons */}
