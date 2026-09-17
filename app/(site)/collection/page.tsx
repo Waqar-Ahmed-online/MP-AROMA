@@ -2,6 +2,10 @@ import Link from "next/link";
 import { getProducts,  getScentCategories } from "@/lib/data";
 import ImgWithFallback from "@/components/ui/ImgWithFallback";
 import { categoryMatchesSlug } from "@/lib/category";
+
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 export const metadata = {
   title: "All Collections | MPAROMA",
 };

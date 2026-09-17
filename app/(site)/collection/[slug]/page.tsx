@@ -2,6 +2,9 @@ import { notFound } from "next/navigation";
 import { getProducts, getScentCategories } from "@/lib/data";
 import ProductCard from "@/components/ui/ProductCard";
 import { categoryMatchesSlug } from "@/lib/category";
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 interface Props {
   params: { slug: string };
 }
