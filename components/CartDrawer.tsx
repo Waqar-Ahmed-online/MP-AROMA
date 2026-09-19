@@ -16,24 +16,21 @@ export default function CartDrawer() {
 
   return (
     <div
-      className={`fixed inset-0 z-[60] ${
-        isCartOpen ? "pointer-events-auto" : "pointer-events-none"
-      }`}
+      className={`fixed inset-0 z-[60] ${isCartOpen ? "pointer-events-auto" : "pointer-events-none"
+        }`}
       aria-hidden={!isCartOpen}
     >
       {/* Backdrop */}
       <div
         onClick={closeCart}
-        className={`absolute inset-0 bg-black/60 transition-opacity duration-300 ${
-          isCartOpen ? "opacity-100" : "opacity-0"
-        }`}
+        className={`absolute inset-0 bg-black/60 transition-opacity duration-300 ${isCartOpen ? "opacity-100" : "opacity-0"
+          }`}
       />
 
       {/* Slider panel */}
       <div
-        className={`absolute right-0 top-0 flex h-full w-full max-w-sm flex-col bg-ink-soft shadow-xl transition-transform duration-300 ease-out ${
-          isCartOpen ? "translate-x-0" : "translate-x-full"
-        }`}
+        className={`absolute right-0 top-0 flex h-full w-full max-w-sm flex-col bg-ink-soft shadow-xl transition-transform duration-300 ease-out ${isCartOpen ? "translate-x-0" : "translate-x-full"
+          }`}
       >
         <div className="flex items-center justify-between border-b border-gold/10 px-5 py-4">
           <h2 className="font-display text-lg tracking-[0.1em] text-parchment">
@@ -97,8 +94,9 @@ export default function CartDrawer() {
                       <button
                         type="button"
                         onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                        disabled={item.stock !== undefined && item.quantity >= item.stock}
                         aria-label="Increase quantity"
-                        className="flex h-6 w-6 items-center justify-center border border-gold/20 text-parchment hover:border-gold"
+                        className="flex h-6 w-6 items-center justify-center border border-gold/20 text-parchment hover:border-gold disabled:opacity-30 disabled:cursor-not-allowed"
                       >
                         +
                       </button>

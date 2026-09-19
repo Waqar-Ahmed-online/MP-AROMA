@@ -20,6 +20,7 @@ export interface CartItem {
   category?: string;          
   maxTesters?: number;        
   selectedTesters?: string[];
+  stock?: number; 
 }
 
 // A) CartContextType interface mein ye 3 lines add karo:
@@ -66,33 +67,36 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     }
   }, [items, hydrated]);
 
-  const addToCart = useCallback((product: Product, quantity: number = 1) => {
-    setItems((prev) => {
-      const existing = prev.find((i) => i.id === product.id);
-      if (existing) {
-        return prev.map((i) =>
-          i.id === product.id
-            ? { ...i, quantity: i.quantity + quantity }
-            : i
-        );
-      }
-      return [
-        ...prev,
-        {
-          id: product.id,
-          slug: product.slug,
-          name: product.name,
-          image: product.image,
-          priceRs: product.priceRs,
-          quantity,
-          category: product.category,      
-    maxTesters: product.maxTesters,  
-    selectedTesters: [], 
-        },
-      ];
-    });
-    setIsCartOpen(true);
-  }, []);
+const addToCart = useCallback((product: Product, quantity: number = 1) => {
+  setItems((prev) => {
+    const existing = prev.find((i) => i.id === product.id);
+    const stock = product.stock ?? Infinity;
+
+    if (existing) {
+      return prev.map((i) =>
+        i.id === product.id
+          ? { ...i, quantity: Math.min(i.quantity + quantity, stock) } // 👈 cap
+          : i
+      );
+    }
+    return [
+      ...prev,
+      {
+        id: product.id,
+        slug: product.slug,
+        name: product.name,
+        image: product.image,
+        priceRs: product.priceRs,
+        quantity: Math.min(quantity, stock), // 👈 cap
+        category: product.category,
+        maxTesters: product.maxTesters,
+        selectedTesters: [],
+        stock: product.stock, // 👈 NAYA
+      },
+    ];
+  });
+  setIsCartOpen(true);
+}, []);
 
 
   
@@ -100,13 +104,17 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     setItems((prev) => prev.filter((i) => i.id !== id));
   }, []);
 
-  const updateQuantity = useCallback((id: string, quantity: number) => {
-    setItems((prev) =>
-      quantity <= 0
-        ? prev.filter((i) => i.id !== id)
-        : prev.map((i) => (i.id === id ? { ...i, quantity } : i))
-    );
-  }, []);
+const updateQuantity = useCallback((id: string, quantity: number) => {
+  setItems((prev) =>
+    quantity <= 0
+      ? prev.filter((i) => i.id !== id)
+      : prev.map((i) =>
+          i.id === id
+            ? { ...i, quantity: Math.min(quantity, i.stock ?? Infinity) } 
+            : i
+        )
+  );
+}, []);
   
   const clearCart = useCallback(() => setItems([]), []);
   const toggleTester = useCallback((cartItemId: string, testerId: string) => {
