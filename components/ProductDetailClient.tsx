@@ -31,9 +31,9 @@ export default function ProductDetailClient({ product }: { product: Product }) {
   }
 const maxQty = typeof product.stock === "number" ? Math.max(0, product.stock) : 10;
 const outOfStock = maxQty === 0;
-  function increaseQty() {
-    setQty((q) => Math.min(10, q + 1));
-  }
+function increaseQty() {
+  setQty((q) => Math.min(maxQty, q + 1));
+}
 
   function handleAddToCart() {
     addToCart(product, qty);
