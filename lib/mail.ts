@@ -43,6 +43,9 @@ export interface OrderEmailDetails {
   shippingLabel: string;
   shippingCost: number;
   total: number;
+    discountCode?: string | null;     
+  discountPercent?: number;         
+  discountAmount?: number; 
   customer: {
     firstName: string;
     lastName: string;
@@ -86,9 +89,14 @@ function buildOrderHtml(order: OrderEmailDetails) {
         <tbody>${rows}</tbody>
       </table>
 
-      <p>Subtotal: Rs. ${order.subtotal.toLocaleString()}<br/>
-      Shipping (${order.shippingLabel}): Rs. ${order.shippingCost.toLocaleString()}<br/>
-      <strong>Total: Rs. ${order.total.toLocaleString()}</strong></p>
+     <p>Subtotal: Rs. ${order.subtotal.toLocaleString()}<br/>
+${
+  order.discountCode
+    ? `Voucher Applied: <strong>${order.discountCode}</strong> (${order.discountPercent}% OFF) — you saved Rs. ${(order.discountAmount || 0).toLocaleString()}<br/>`
+    : ""
+}
+Shipping (${order.shippingLabel}): Rs. ${order.shippingCost.toLocaleString()}<br/>
+<strong>Total: Rs. ${order.total.toLocaleString()}</strong></p>
 
       <h3>Delivery Details</h3>
       <p>
@@ -146,9 +154,14 @@ function buildCustomerHtml(order: OrderEmailDetails) {
         <tbody>${rows}</tbody>
       </table>
 
-      <p>Subtotal: Rs. ${order.subtotal.toLocaleString()}<br/>
-      Shipping (${order.shippingLabel}): Rs. ${order.shippingCost.toLocaleString()}<br/>
-      <strong>Total: Rs. ${order.total.toLocaleString()}</strong></p>
+    <p>Subtotal: Rs. ${order.subtotal.toLocaleString()}<br/>
+${
+  order.discountCode
+    ? `Voucher Applied: <strong>${order.discountCode}</strong> (${order.discountPercent}% OFF) — you saved Rs. ${(order.discountAmount || 0).toLocaleString()}<br/>`
+    : ""
+}
+Shipping (${order.shippingLabel}): Rs. ${order.shippingCost.toLocaleString()}<br/>
+<strong>Total: Rs. ${order.total.toLocaleString()}</strong></p>
 
       <h3>Delivery Address</h3>
       <p>

@@ -95,6 +95,9 @@ export async function POST(req: Request) {
       shippingLabel: body.shippingLabel,
       shippingCost: body.shippingCost,
       total: body.total,
+      discountCode: body.discountCode || null,      
+  discountPercent: body.discountPercent || 0,  
+  discountAmount: body.discountAmount || 0, 
       customer: body.customer,
       note: body.note,
     };
