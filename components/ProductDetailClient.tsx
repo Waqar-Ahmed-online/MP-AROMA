@@ -192,7 +192,7 @@ function increaseQty() {
 </div>
           </div>
 
-          {/* Action buttons */}
+         
           <button
             onClick={handleAddToCart}
             className="mt-2 w-full border border-gold bg-gold px-6 py-3 font-body text-xs tracking-[0.2em] text-ink transition-colors hover:bg-transparent hover:text-parchment"
@@ -269,4 +269,5 @@ function ShareIcon() {
     </svg>
   );
 }
+//helo
 //helo
