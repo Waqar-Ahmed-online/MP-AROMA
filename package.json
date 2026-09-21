@@ -10,29 +10,29 @@
     "seed": "node scripts/seed.mjs",
     "create-admin": "node scripts/create-admin.mjs"
   },
-"dependencies": {
-  "bcryptjs": "^3.0.3",
-  "cloudinary": "^2.11.0",
-  "jose": "^6.2.12",
-  "mongodb": "^6.8.0",
-  "next": "14.2.15",
-  "nodemailer": "^6.9.15",
-  "react": "^18.3.1",
-  "react-dom": "^18.3.1",
-  "aos": "^2.3.4",
-"@types/aos": "^3.0.7"
-},
-"devDependencies": {
-  "@types/nodemailer": "^6.4.16",
-  "@types/node": "^20.14.15",
-  "@types/react": "^18.3.3",
-  "@types/react-dom": "^18.3.0",
-  "autoprefixer": "^10.4.20",
-  "dotenv": "^17.4.2",
-  "eslint": "^8.57.0",
-  "eslint-config-next": "14.2.15",
-  "postcss": "^8.4.41",
-  "tailwindcss": "^3.4.9",
-  "typescript": "^5.5.4"
-}
+  "dependencies": {
+    "@types/aos": "^3.0.7",
+    "aos": "^2.3.4",
+    "bcryptjs": "^3.0.3",
+    "cloudinary": "^2.11.0",
+    "jose": "^6.2.12",
+    "mongodb": "^6.21.0",
+    "next": "14.2.15",
+    "nodemailer": "^6.9.15",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.15",
+    "@types/nodemailer": "^6.4.16",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "autoprefixer": "^10.4.20",
+    "dotenv": "^17.4.2",
+    "eslint": "^8.57.0",
+    "eslint-config-next": "14.2.15",
+    "postcss": "^8.4.41",
+    "tailwindcss": "^3.4.9",
+    "typescript": "^5.5.4"
+  }
 }
