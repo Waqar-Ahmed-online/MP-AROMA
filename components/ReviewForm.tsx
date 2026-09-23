@@ -15,7 +15,7 @@ export default function ReviewForm() {
   function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
     const selected = Array.from(e.target.files || []);
     if (selected.length > MAX_FILES) {
-      setFileError(`Aap zyada se zyada ${MAX_FILES} images/videos laga sakte hain.`);
+      setFileError(`You can upload a maximum of ${MAX_FILES} images/videos.`);
       setFiles(selected.slice(0, MAX_FILES));
       return;
     }
@@ -50,9 +50,9 @@ export default function ReviewForm() {
   if (status === "done") {
     return (
       <div className="mx-auto mt-10 max-w-lg border border-gold/20 bg-ink-soft/40 p-6 text-center">
-        <p className="text-sm text-gold">Shukriya! Aapka review submit ho gaya hai.</p>
+        <p className="text-sm text-gold">Thank you! Your review has been submitted successfully.</p>
         <p className="mt-1 text-xs text-smoke">
-          Approve hone ke baad yeh page par nazar aayega.
+         Once approved, it will appear on this page.
         </p>
       </div>
     );
@@ -64,7 +64,7 @@ export default function ReviewForm() {
       className="mx-auto mt-10 max-w-lg space-y-4 border border-gold/10 bg-ink-soft/40 p-6"
     >
       <h3 className="text-center font-display text-xl tracking-[0.08em] text-parchment">
-        Apna review likhein
+       Write your review.
       </h3>
 
       <label className="block text-xs tracking-[0.1em] text-smoke">
@@ -103,7 +103,7 @@ export default function ReviewForm() {
       </label>
 
       <label className="block text-xs tracking-[0.1em] text-smoke">
-        Photos or Videos (optional — 1 ya 2 laga sakte hain)
+       Photos or Videos (optional — you can upload 1 or 2)
         <input
           type="file"
           accept="image/*,video/*"

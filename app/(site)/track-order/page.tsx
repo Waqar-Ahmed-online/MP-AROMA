@@ -51,7 +51,7 @@ function TrackOrderForm() {
   async function handleSubmit(e?: React.FormEvent) {
     e?.preventDefault();
     if (!orderId.trim() || !phone.trim()) {
-      setError("Order ID aur phone number dono darj karein.");
+      setError("Enter both the Order ID and phone number.");
       return;
     }
 
@@ -68,12 +68,12 @@ function TrackOrderForm() {
       const data = await res.json();
 
       if (!res.ok) {
-        throw new Error(data?.error || "Order nahi mila.");
+        throw new Error(data?.error || "Order not found.");
       }
 
       setOrder(data.order);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Order nahi mila.");
+      setError(err instanceof Error ? err.message : "Order not found.");
     } finally {
       setLoading(false);
     }
@@ -102,8 +102,8 @@ function TrackOrderForm() {
           Track Your Order
         </h1>
         <p className="mt-2 text-sm text-smoke">
-          Apna Order ID aur woh phone number darj karein jo order place karte
-          waqt diya tha. Account banane ki koi zaroorat nahi.
+         Enter your Order ID and the phone number you provided when placing the order.
+There is no need to create an account.
         </p>
 
         <form onSubmit={handleSubmit} className="mt-8 flex flex-col gap-4">
