@@ -5,7 +5,7 @@
 const cloudinary = require("cloudinary").v2;
 const { MongoClient } = require("mongodb");
 
-// 👇 PURANE account ki details (jahan se images le kar aani hain)
+
 const OLD_ACCOUNT = {
   cloud_name: "mfd5vbiw",
   api_key: "932482714258894",
@@ -20,7 +20,7 @@ const NEW_ACCOUNT = {
 };
 
 const MONGODB_URI = "mongodb+srv://waqarahmedonline426_db_user:haker125@cluster0.oemwigf.mongodb.net/sip-stall-pos?appName=Cluster0";
-const DB_NAME = "mparoma"; // 👈 fix kiya
+const DB_NAME = "mparoma"; 
 
 async function main() {
   // ---- Step A: OLD account se saari images ki list nikalo ----

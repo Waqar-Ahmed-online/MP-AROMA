@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { getTesters } from "@/lib/data";
 import ProductCard from "@/components/ui/ProductCard";
-
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 export const metadata = {
   title: "Perfume Testers | MPAROMA",
 };
